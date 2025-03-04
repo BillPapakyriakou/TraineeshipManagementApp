@@ -4,5 +4,6 @@ public enum Role {
     STUDENT,
     PROFESSOR,
     COMPANY,
-    COMMITEE_MEMBER
+    COMMITEE_MEMBER,
+    PARENT
 }
