@@ -6,7 +6,7 @@ public interface UserService {
 
     void saveUser(User user);  // saves or updates a user
 
-    boolean isUserParent(User user);  // checks if the user is a parent
+    boolean isUserPresent(User user);  // checks if the user is present
 
     User findById(String username);  // finds user by username
 

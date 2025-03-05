@@ -1,12 +1,14 @@
 package traineeship_app.services;
 
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import traineeship_app.domainmodel.Role;
+
 import traineeship_app.domainmodel.User;
 import traineeship_app.mappers.UserMapper;
 
@@ -43,8 +45,9 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     @Override
-    public boolean isUserParent(User user) {
-        return user.getRole() == Role.PARENT;
+    public boolean isUserPresent(User user) {
+        User storedUser = userDAO.findByUsername(user.getUsername());
+        return storedUser != null;
     }
 
     @Override

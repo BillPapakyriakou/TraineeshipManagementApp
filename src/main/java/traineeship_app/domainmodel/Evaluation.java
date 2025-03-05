@@ -9,7 +9,7 @@ public class Evaluation {
     int effectiveness;
 
    // We decided to set up EvaluationType as an enum inside the class
-    private enum EvaluationType {
+    public enum EvaluationType {
         EXAM,
         ASSIGNMENT,
         PRESENTATION,
