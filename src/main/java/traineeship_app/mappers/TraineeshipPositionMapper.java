@@ -6,6 +6,7 @@ import traineeship_app.domainmodel.TraineeshipPosition;
 
 import java.util.List;
 
+
 //  TraineeshipPositionMapper is now a Jpa repository, which comes with
 //  built-in methods like save(), findById(), findAll(), etc
 

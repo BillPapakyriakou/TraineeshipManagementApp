@@ -18,7 +18,7 @@ public class User implements UserDetails, Serializable {
 
     private Role role;
 
-    // Default constructor - required for JPA
+    // Default constructor (JPA requirement for entities)
     public User() {}
 
     // User constructor

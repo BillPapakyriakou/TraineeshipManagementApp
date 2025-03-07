@@ -1,21 +1,42 @@
 package traineeship_app.domainmodel;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
 public class Student {
 
-    private String username;
+    @Id
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;  // primary key
+
+    @Column(name = "student_name", nullable = false)
     private String studentName;
+
+    @Column(name = "AM", unique = true, nullable = false)
     private String AM;
+
+    @Column(name = "avg_grade")
     private double avgGrade;
+
+    @Column(name = "preferred_location")
     private String preferredLocation;
+
+    @Column(name = "interests")
     private String interests;
+
+    @Column(name = "skills")
     private String skills;
 
+    @Column(name = "looking_for_traineeship", nullable = false)
     private boolean lookingForTraineeship;
 
+    @OneToOne(cascade = CascadeType.ALL)   // student can be assigned to ONE traineeship position
+    @JoinColumn(name = "assigned_traineeship_id", referencedColumnName = "id")
     private TraineeshipPosition assignedTraineeship;
+
+
+    // Default constructor (JPA requirement for entities)
+    public Student() {}
 
 
     // Student constructor

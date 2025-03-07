@@ -1,18 +1,28 @@
 package traineeship_app.domainmodel;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.ArrayList;
 
 @Entity
+@Table(name = "company")
 public class Company {
 
-
+    @Id
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
+
+    @Column(name = "company_name", nullable = false, unique = true)
     private String companyName;
+
+    @Column(name = "company_location")
     private String companyLocation;
 
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private ArrayList<TraineeshipPosition> positions;
 
+
+    // Default constructor (JPA requirement for entities)
+    public Company() {};
 
     // Company constructor
     public Company(String username, String companyName, String companyLocation, ArrayList<TraineeshipPosition> positions) {
