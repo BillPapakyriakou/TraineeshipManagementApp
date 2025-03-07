@@ -22,7 +22,7 @@ public class Company {
 
 
     // Default constructor (JPA requirement for entities)
-    public Company() {};
+    public Company() {}
 
     // Company constructor
     public Company(String username, String companyName, String companyLocation, ArrayList<TraineeshipPosition> positions) {
