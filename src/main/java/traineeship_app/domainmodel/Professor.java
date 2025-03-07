@@ -1,7 +1,9 @@
 package traineeship_app.domainmodel;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 
+@Entity
 public class Professor {
 
     private String username;

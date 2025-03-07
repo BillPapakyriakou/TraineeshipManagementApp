@@ -1,8 +1,10 @@
 package traineeship_app.domainmodel;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 import java.time.LocalDate;
 
+@Entity
 public class TraineeshipPosition {
 
     private int id;

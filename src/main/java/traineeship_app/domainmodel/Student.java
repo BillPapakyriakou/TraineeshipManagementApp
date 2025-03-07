@@ -1,7 +1,8 @@
 package traineeship_app.domainmodel;
 
-import java.util.ArrayList;
+import javax.persistence.Entity;
 
+@Entity
 public class Student {
 
     private String username;

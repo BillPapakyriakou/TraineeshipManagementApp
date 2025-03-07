@@ -3,10 +3,12 @@ package traineeship_app.domainmodel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.Entity;
 import java.io.Serializable;  // required for Spring Security session management
 import java.util.Collection;
 import java.util.List;
 
+@Entity
 public class User implements UserDetails, Serializable {
 
     private Long id;  // ID for database storage

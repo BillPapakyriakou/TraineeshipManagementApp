@@ -1,5 +1,8 @@
 package traineeship_app.domainmodel;
 
+import javax.persistence.Entity;
+
+@Entity
 public class Evaluation {
 
     private int id;

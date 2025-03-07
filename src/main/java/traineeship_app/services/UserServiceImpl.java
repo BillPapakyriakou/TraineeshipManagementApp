@@ -9,9 +9,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
+import org.springframework.stereotype.Service;
 import traineeship_app.domainmodel.User;
 import traineeship_app.mappers.UserMapper;
 
+@Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Autowired
