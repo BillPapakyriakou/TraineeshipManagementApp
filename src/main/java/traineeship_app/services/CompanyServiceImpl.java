@@ -9,8 +9,8 @@ import traineeship_app.mappers.CompanyMapper;
 import traineeship_app.mappers.TraineeshipPositionMapper;
 
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service

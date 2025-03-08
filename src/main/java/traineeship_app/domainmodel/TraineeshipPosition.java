@@ -1,35 +1,69 @@
 package traineeship_app.domainmodel;
 
-import javax.persistence.Entity;
-import java.util.ArrayList;
+import javax.persistence.*;
+import java.util.List;
 import java.time.LocalDate;
 
 @Entity
+@Table(name = "traineeship_position")
 public class TraineeshipPosition {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private int id;
 
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "fromDate")
     private LocalDate fromDate;
+
+    @Column(name = "toDate")
     private LocalDate toDate;
+
+    @Column(name = "topics")
     private String topics;
+
+    @Column(name = "skills")
     private String skills;
+
+    @Column(name = "isAssigned", nullable = false)
     private boolean isAssigned;
+
+    @Column(name = "studentLogbook")
     private String studentLogbook;
+
+    @Column(name = "passFailGrade", nullable = false)
     private boolean passFailGrade;
 
-    private Student student;
-    private Professor supervisor;
-    private Company company;
-    private ArrayList<Evaluation> evaluations;
+    @OneToOne
+    @JoinColumn(name = "student_id", referencedColumnName = "username")
+    private Student student;  // One-to-one with student
 
+    @ManyToOne
+    @JoinColumn(name = "supervisor_id", referencedColumnName = "username")
+    private Professor supervisor;  // Many-to-one with professor
+
+    @ManyToOne
+    @JoinColumn(name = "company_id", referencedColumnName = "username")
+    private Company company;  // Many-to-one with company
+
+    @OneToMany(mappedBy = "traineeshipPosition")
+    private List<Evaluation> evaluations;  // One-to-many with Evaluation
+
+
+    // Default constructor (JPA requirement for entities)
+    public TraineeshipPosition(){}
 
     // TraineeshipPosition constructor
 
     public TraineeshipPosition(int id, String title, String description, LocalDate fromDate, LocalDate toDate, String topics,
                                String skills, boolean isAssigned, String studentLogbook, boolean passFailGrade, Student student,
-                               Professor supervisor, Company company, ArrayList<Evaluation> evaluations) {
+                               Professor supervisor, Company company, List<Evaluation> evaluations) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -151,11 +185,11 @@ public class TraineeshipPosition {
         this.company = company;
     }
 
-    public ArrayList<Evaluation> getEvaluations() {
+    public List<Evaluation> getEvaluations() {
         return evaluations;
     }
 
-    public void setEvaluations(ArrayList<Evaluation> evaluations) {
+    public void setEvaluations(List<Evaluation> evaluations) {
         this.evaluations = evaluations;
     }
 }

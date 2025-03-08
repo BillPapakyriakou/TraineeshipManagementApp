@@ -1,7 +1,7 @@
 package traineeship_app.domainmodel;
 
 import javax.persistence.*;
-import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "company")
@@ -18,14 +18,14 @@ public class Company {
     private String companyLocation;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private ArrayList<TraineeshipPosition> positions;
+    private List<TraineeshipPosition> positions;
 
 
     // Default constructor (JPA requirement for entities)
     public Company() {}
 
     // Company constructor
-    public Company(String username, String companyName, String companyLocation, ArrayList<TraineeshipPosition> positions) {
+    public Company(String username, String companyName, String companyLocation, List<TraineeshipPosition> positions) {
         this.username = username;
         this.companyName = companyName;
         this.companyLocation = companyLocation;
@@ -57,11 +57,11 @@ public class Company {
         this.companyLocation = companyLocation;
     }
 
-    public ArrayList<TraineeshipPosition> getPositions() {
+    public List<TraineeshipPosition> getPositions() {
         return positions;
     }
 
-    public void setPositions(ArrayList<TraineeshipPosition> positions) {
+    public void setPositions(List<TraineeshipPosition> positions) {
         this.positions = positions;
     }
 }

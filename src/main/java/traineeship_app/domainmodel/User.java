@@ -3,20 +3,30 @@ package traineeship_app.domainmodel;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;  // required for Spring Security session management
 import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Table(name = "user")
 public class User implements UserDetails, Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-generate ID
+    @Column(name = "id")
     private Long id;  // ID for database storage
 
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
+
+    @Column(name = "password", nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)  // ince role is an enum
+    @Column(name = "role")
     private Role role;
+
 
     // Default constructor (JPA requirement for entities)
     public User() {}

@@ -1,15 +1,32 @@
 package traineeship_app.domainmodel;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Entity
+@Table(name = "evaluation")
 public class Evaluation {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")  // Column for the primary key
     private int id;
+
+    @Enumerated(EnumType.STRING)  // Store enum as a string in the database
+    @Column(name = "evaluation_type")
     private EvaluationType evaluationType;
+
+    @Column(name = "motivation")
     int motivation;
+
+    @Column(name = "efficiency")
     int efficiency;
+
+    @Column(name = "effectiveness")
     int effectiveness;
+
+    @ManyToOne
+    @JoinColumn(name = "traineeship_position_id")
+    private TraineeshipPosition traineeshipPosition;
 
    // We decided to set up EvaluationType as an enum inside the class
     public enum EvaluationType {
@@ -19,6 +36,8 @@ public class Evaluation {
         QUIZ,
         PROJECT
     }
+
+    public Evaluation() {}
 
     // Evaluation constructor
     public Evaluation(int id, EvaluationType evaluationType, int motivation, int efficiency, int effectiveness) {

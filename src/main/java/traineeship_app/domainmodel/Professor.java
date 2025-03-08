@@ -1,20 +1,30 @@
 package traineeship_app.domainmodel;
 
-import javax.persistence.Entity;
-import java.util.ArrayList;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
+@Table(name = "professor")
 public class Professor {
 
+    @Id
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
+
+    @Column(name = "professor_name", nullable = false)
     private String professorName;
+
+    @Column(name = "interests")
     private String interests;
 
-    private ArrayList<TraineeshipPosition> supervisedPositions;
+    @OneToMany(mappedBy = "supervisor")
+    private List<TraineeshipPosition> supervisedPositions;  // One-to-many relationship with TraineeshipPosition
 
+
+    public Professor() {}
 
     // Professor constructor
-    public Professor(String username, String professorName, String interests, ArrayList<TraineeshipPosition> supervisedPositions) {
+    public Professor(String username, String professorName, String interests, List<TraineeshipPosition> supervisedPositions) {
         this.username = username;
         this.professorName = professorName;
         this.interests = interests;
@@ -48,11 +58,11 @@ public class Professor {
         this.interests = interests;
     }
 
-    public ArrayList<TraineeshipPosition> getSupervisedPositions() {
+    public List<TraineeshipPosition> getSupervisedPositions() {
         return supervisedPositions;
     }
 
-    public void setSupervisedPositions(ArrayList<TraineeshipPosition> supervisedPositions) {
+    public void setSupervisedPositions(List<TraineeshipPosition> supervisedPositions) {
         this.supervisedPositions = supervisedPositions;
     }
 }
