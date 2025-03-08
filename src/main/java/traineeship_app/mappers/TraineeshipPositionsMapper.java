@@ -11,7 +11,7 @@ import java.util.List;
 //  built-in methods like save(), findById(), findAll(), etc
 
 @Repository
-public interface TraineeshipPositionMapper extends JpaRepository<TraineeshipPosition, Integer> {
+public interface TraineeshipPositionsMapper extends JpaRepository<TraineeshipPosition, Integer> {
     // id (int) acts as the primary key
 
     // Custom query method to find TraineeshipPosition by username

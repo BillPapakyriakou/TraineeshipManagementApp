@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import traineeship_app.domainmodel.Student;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.mappers.StudentMapper;
-import traineeship_app.mappers.TraineeshipPositionMapper;
+import traineeship_app.mappers.TraineeshipPositionsMapper;
 
 import java.util.Optional;
 
@@ -15,7 +15,7 @@ public class StudentServiceImpl implements StudentService {
     @Autowired
     private StudentMapper studentMapper;
     @Autowired
-    private TraineeshipPositionMapper traineeshipPositionMapper;
+    private TraineeshipPositionsMapper traineeshipPositionMapper;
 
     @Override
     public void SaveProfile(Student student) {

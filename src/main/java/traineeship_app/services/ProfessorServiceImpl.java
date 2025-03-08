@@ -6,7 +6,7 @@ import traineeship_app.domainmodel.Evaluation;
 import traineeship_app.domainmodel.Professor;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.mappers.ProfessorMapper;
-import traineeship_app.mappers.TraineeshipPositionMapper;
+import traineeship_app.mappers.TraineeshipPositionsMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     @Autowired
     private ProfessorMapper professorMapper;
     @Autowired
-    private TraineeshipPositionMapper traineeshipPositionMapper;
+    private TraineeshipPositionsMapper traineeshipPositionMapper;
 
     @Override
     public Professor retrieveProfile(String username) {
@@ -31,7 +31,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public ArrayList<TraineeshipPosition> retrieveAssignedPositions(String username) {
+    public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
         // Gets list of traineeship positions for the given username
         List<TraineeshipPosition> positions = professorMapper.findByProfessorUsername(username);
 

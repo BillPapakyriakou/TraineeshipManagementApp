@@ -6,7 +6,7 @@ import traineeship_app.domainmodel.Company;
 import traineeship_app.domainmodel.Evaluation;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.mappers.CompanyMapper;
-import traineeship_app.mappers.TraineeshipPositionMapper;
+import traineeship_app.mappers.TraineeshipPositionsMapper;
 
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Autowired
     private CompanyMapper companyMapper;
     @Autowired
-    private TraineeshipPositionMapper traineeshipPositionMapper;
+    private TraineeshipPositionsMapper traineeshipPositionMapper;
 
     @Override
     public Company retrieveProfile(String username) {
@@ -32,7 +32,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public ArrayList<TraineeshipPosition> retrieveAvailablePositions(String username) {
+    public List<TraineeshipPosition> retrieveAvailablePositions(String username) {
         // Gets list of traineeship positions for the given username
         List<TraineeshipPosition> positions = traineeshipPositionMapper.findByCompanyUsername(username);
 
@@ -54,7 +54,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public ArrayList<TraineeshipPosition> retrieveAssignedPositions(String username) {
+    public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
 
         List<TraineeshipPosition> positions = traineeshipPositionMapper.findByCompanyUsername(username);
         return new ArrayList<>(positions);

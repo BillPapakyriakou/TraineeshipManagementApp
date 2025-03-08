@@ -4,7 +4,7 @@ import traineeship_app.domainmodel.Company;
 import traineeship_app.domainmodel.Evaluation;
 import traineeship_app.domainmodel.TraineeshipPosition;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface CompanyService {
 
@@ -12,11 +12,11 @@ public interface CompanyService {
 
     void SaveProfile(Company company);
 
-    ArrayList<TraineeshipPosition> retrieveAvailablePositions(String username);
+    List<TraineeshipPosition> retrieveAvailablePositions(String username);
 
     void addPosition(String username, TraineeshipPosition position);
 
-    ArrayList<TraineeshipPosition> retrieveAssignedPositions(String username);
+    List<TraineeshipPosition> retrieveAssignedPositions(String username);
 
     void evaluateAssignedPosition(int positionId);
 

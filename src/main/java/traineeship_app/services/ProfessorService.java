@@ -4,7 +4,7 @@ import traineeship_app.domainmodel.Evaluation;
 import traineeship_app.domainmodel.Professor;
 import traineeship_app.domainmodel.TraineeshipPosition;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ProfessorService {
 
@@ -12,7 +12,7 @@ public interface ProfessorService {
 
     void SaveProfile(Professor professor);
 
-    ArrayList<TraineeshipPosition> retrieveAssignedPositions(String username);
+    List<TraineeshipPosition> retrieveAssignedPositions(String username);
 
     void evaluateAssignedPosition(int positionId);
 
