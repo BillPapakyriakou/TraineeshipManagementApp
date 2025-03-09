@@ -7,14 +7,11 @@ public class SupervisorAssignmentFactory {
 
 
     public SupervisorAssignmentStrategy create(String strategy) {
-        switch (strategy.toLowerCase()) {
-            case "load":
-                return assignmentBasedOnLoad;
-            case "interests":
-                return assignmentBasedOnInterests;
-            default:
-                throw new IllegalArgumentException("Unknown strategy: " + strategy);
-        }
+        return switch (strategy.toLowerCase()) {
+            case "load" -> assignmentBasedOnLoad;
+            case "interests" -> assignmentBasedOnInterests;
+            default -> throw new IllegalArgumentException("Unknown strategy: " + strategy);
+        };
     }
 
 }

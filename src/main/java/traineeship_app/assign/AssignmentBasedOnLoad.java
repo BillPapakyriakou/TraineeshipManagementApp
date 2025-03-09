@@ -1,5 +1,6 @@
 package traineeship_app.assign;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import traineeship_app.domainmodel.Professor;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.mappers.ProfessorMapper;
@@ -7,8 +8,11 @@ import traineeship_app.mappers.TraineeshipPositionsMapper;
 
 public class AssignmentBasedOnLoad implements SupervisorAssignmentStrategy {
 
+    @Autowired
     private TraineeshipPositionsMapper positionsMapper;
+    @Autowired
     private ProfessorMapper professorMapper;
+
 
     @Override
     public void assign(Integer positionId) {
