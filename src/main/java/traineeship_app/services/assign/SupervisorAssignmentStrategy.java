@@ -1,4 +1,4 @@
-package traineeship_app.assign;
+package traineeship_app.services.assign;
 
 public interface SupervisorAssignmentStrategy {
     void assign(Integer positionId);

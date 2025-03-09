@@ -1,4 +1,4 @@
-package traineeship_app.search;
+package traineeship_app.services.search;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import traineeship_app.domainmodel.Student;

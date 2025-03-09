@@ -1,4 +1,4 @@
-package traineeship_app.search;
+package traineeship_app.services.search;
 
 public class PositionsSearchFactory {
 

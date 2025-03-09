@@ -1,4 +1,4 @@
-package traineeship_app.search;
+package traineeship_app.services.search;
 
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.mappers.StudentMapper;

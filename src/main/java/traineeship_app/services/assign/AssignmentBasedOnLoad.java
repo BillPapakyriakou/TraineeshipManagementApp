@@ -1,4 +1,4 @@
-package traineeship_app.assign;
+package traineeship_app.services.assign;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import traineeship_app.domainmodel.Professor;

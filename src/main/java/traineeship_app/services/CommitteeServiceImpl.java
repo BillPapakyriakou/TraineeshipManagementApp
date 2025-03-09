@@ -2,14 +2,14 @@ package traineeship_app.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import traineeship_app.assign.SupervisorAssignmentFactory;
-import traineeship_app.assign.SupervisorAssignmentStrategy;
+import traineeship_app.services.assign.SupervisorAssignmentFactory;
+import traineeship_app.services.assign.SupervisorAssignmentStrategy;
 import traineeship_app.domainmodel.Student;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.mappers.StudentMapper;
 import traineeship_app.mappers.TraineeshipPositionsMapper;
-import traineeship_app.search.PositionsSearchFactory;
-import traineeship_app.search.PositionsSearchStrategy;
+import traineeship_app.services.search.PositionsSearchFactory;
+import traineeship_app.services.search.PositionsSearchStrategy;
 
 import java.util.List;
 import java.util.Optional;
