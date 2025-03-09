@@ -19,4 +19,8 @@ public interface ProfessorMapper extends JpaRepository<Professor, String>{
     Professor findByUsername(String username);
 
     List<TraineeshipPosition> findByProfessorUsername(String username);
+
+    String findLeastBusyProfessor();
+
+    String findProfessorByExpertise(String topics);
 }

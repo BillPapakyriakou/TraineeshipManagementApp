@@ -17,7 +17,14 @@ public interface TraineeshipPositionsMapper extends JpaRepository<TraineeshipPos
     // Custom query method to find TraineeshipPosition by username
     TraineeshipPosition findByUsername(String username);
 
+    void update(TraineeshipPosition position);
+
     List<TraineeshipPosition> findByCompanyUsername(String username);
 
 
+    List<TraineeshipPosition> findByInterests(String interests);
+
+    List<TraineeshipPosition> findAssignedPositions();
+
+    String getTopics(Integer positionId);
 }

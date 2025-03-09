@@ -3,6 +3,9 @@ package traineeship_app.mappers;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import traineeship_app.domainmodel.Company;
+import traineeship_app.domainmodel.TraineeshipPosition;
+
+import java.util.List;
 
 
 //  CompanyMapper is now a Jpa repository, which comes with
@@ -16,5 +19,5 @@ public interface CompanyMapper extends JpaRepository<Company, String> {
     Company findByUsername(String username);
 
 
-
+    List<TraineeshipPosition> findPositionsByLocation(String location);
 }
