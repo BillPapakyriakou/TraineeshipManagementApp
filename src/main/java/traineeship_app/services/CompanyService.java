@@ -22,5 +22,5 @@ public interface CompanyService {
 
     void saveEvaluation(int positionId, Evaluation evaluation);
 
-
+    void deletePosition(int positionId);
 }

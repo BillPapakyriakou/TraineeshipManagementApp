@@ -41,7 +41,7 @@ public class ProfessorController {
     @PostMapping("/profile/save")
     public String saveProfile(@ModelAttribute("profile") Professor professor, Model theModel) {
         professorService.SaveProfile(professor);
-        theModel.addAttribute("student", professor);
+        theModel.addAttribute("professor", professor);
         return "redirect:/profile?username=" + professor.getUsername();  // redirects back to the user's profile
     }
 

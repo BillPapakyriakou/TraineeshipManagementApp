@@ -102,4 +102,16 @@ public class CompanyServiceImpl implements CompanyService {
             throw new IllegalArgumentException("Position not found with ID: " + positionId);
         }
     }
+
+    @Override
+    public void deletePosition(int positionId) {
+        // Check if the position exists
+        if (traineeshipPositionMapper.existsById(positionId)) {
+            traineeshipPositionMapper.deleteById(positionId);
+        } else {
+            throw new IllegalArgumentException("Position with ID " + positionId + " not found.");
+        }
+    }
+
+
 }
