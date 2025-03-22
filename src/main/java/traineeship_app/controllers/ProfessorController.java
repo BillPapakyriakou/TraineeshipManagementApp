@@ -24,7 +24,7 @@ public class ProfessorController {
 
     @GetMapping("/professor/dashboard")
     public String getProfessorDashboard() {
-        return "professor-dashboard";
+        return "professor/dashboard";
     }
 
     @GetMapping("/profile")
@@ -35,7 +35,7 @@ public class ProfessorController {
         // Add professor to the model
         model.addAttribute("professor", professor);
 
-        return "professor-profile"; // Returns the profile view
+        return "professor/profile"; // Returns the profile view
     }
 
     @PostMapping("/profile/save")
@@ -53,7 +53,7 @@ public class ProfessorController {
         // Add the positions to the model
         model.addAttribute("positions", positions);
 
-        return "assigned-traineeships"; // Return the view displaying assigned traineeships
+        return "professor/assigned-positions"; // Return the view displaying assigned traineeships
     }
 
     @GetMapping("/professor/evaluate")
@@ -82,7 +82,7 @@ public class ProfessorController {
         model.addAttribute("position", position);
         model.addAttribute("evaluation", new Evaluation()); // Empty Evaluation object to bind the form
 
-        return "evaluate-traineeship"; // Returns the evaluation form view
+        return "professor/evaluate-traineeship"; // Returns the evaluation form view
     }
 
     @PostMapping("/professor/evaluate/save")

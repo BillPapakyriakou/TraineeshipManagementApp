@@ -23,7 +23,7 @@ public class CompanyController {
 
     @GetMapping("/company/dashboard")
     public String getCompanyDashboard() {
-        return "company-dashboard";
+        return "company/dashboard";
     }
 
     @GetMapping("/profile")
@@ -34,7 +34,7 @@ public class CompanyController {
         // Add professor to the model
         model.addAttribute("company", company);
 
-        return "company-profile"; // Returns the profile view
+        return "company/profile"; // Returns the profile view
     }
 
     @PostMapping("/profile/save")
@@ -50,13 +50,13 @@ public class CompanyController {
 
         model.addAttribute("positions", positions);
 
-        return "available-positions";
+        return "company/available-positions";
     }
 
     @GetMapping("/position-form")
     public String showPositionForm(Model model) {
         model.addAttribute("position", new TraineeshipPosition()); // Empty position object for form binding
-        return "position-form";
+        return "company/position-form";
     }
 
     @PostMapping("/position/save")
@@ -73,14 +73,14 @@ public class CompanyController {
 
         model.addAttribute("positions", positions);
 
-        return "assigned-positions";
+        return "company/assigned-positions";
     }
 
     @GetMapping("/company/evaluate")
     public String evaluateAssignedTraineeship(@RequestParam("positionId") int positionId, Model model) {
         companyService.evaluateAssignedPosition(positionId);
         model.addAttribute("evaluation", new Evaluation()); // Empty evaluation object for form binding
-        return "evaluate-traineeship";
+        return "company/evaluate-traineeship";
     }
 
     @PostMapping("/evaluation/save")

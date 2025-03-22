@@ -20,7 +20,7 @@ public class StudentController {
 
     @GetMapping("/student/dashboard")  // tells spring that this method should handle get-requests sent to the /student/dashboard URL
     public String getStudentDashboard() {
-        return "student-dashboard"; // Redirects to the student dashboard view
+        return "student/dashboard"; // Redirects to the student dashboard view
     }
 
     @GetMapping("/profile")
@@ -33,7 +33,7 @@ public class StudentController {
         // Add student to the model
         model.addAttribute("student", student);
 
-        return "student-profile"; // Returns the profile view
+        return "student/profile"; // Returns the profile view
     }
 
     @PostMapping("/profile/save")  // tells spring that this method should handle post-requests sent to the correct URL
@@ -46,7 +46,7 @@ public class StudentController {
     @GetMapping("/logbook")
     public String fillLogbook(Model model) {
         model.addAttribute("position", new TraineeshipPosition()); // Adds an empty position object
-        return "logbook-form"; // Returns the logbook form view
+        return "student/logbook"; // Returns the logbook form view
     }
 
     @PostMapping("/logbook/save")

@@ -20,7 +20,7 @@ public class CommitteeController {
 
     @GetMapping("/committee/dashboard")
     public String getCommitteeDashboard() {
-        return "committee-dashboard";
+        return "committee/applications";
     }
 
     @GetMapping("/committee/traineeship-applications")
@@ -29,7 +29,7 @@ public class CommitteeController {
 
         model.addAttribute("applicants", applicants);
 
-        return "traineeship-applications";
+        return "committee/applications";
     }
 
     @GetMapping("/committee/find-positions")
@@ -37,7 +37,7 @@ public class CommitteeController {
                                 @RequestParam("strategy") String strategy, Model model) {
         List<TraineeshipPosition> positions = committeeService.retrievePositionsForApplicant(studentUsername, strategy);
         model.addAttribute("positions", positions);
-        return "available-positions";
+        return "committee/positions";
     }
 
     @PostMapping("/committee/assign-position")
@@ -45,7 +45,7 @@ public class CommitteeController {
                                  @RequestParam("studentUsername") String studentUsername,
                                  Model model) {
         committeeService.assignPosition(positionId, studentUsername);
-        return "redirect:/committee/assigned-traineeships";
+        return "redirect:/committee/assigned-positions";
     }
 
     @PostMapping("/committee/assign-supervisor")
@@ -53,20 +53,20 @@ public class CommitteeController {
                                    @RequestParam("strategy") String strategy,
                                    Model model) {
         committeeService.assignSupervisor(positionId, strategy);
-        return "redirect:/committee/assigned-traineeships";
+        return "redirect:/committee/assigned-positions";
     }
 
     @GetMapping("/committee/assigned-traineeships")
     public String listAssignedTraineeships(Model model) {
         List<TraineeshipPosition> assignedPositions = committeeService.listAssignedTraineeships();
         model.addAttribute("assignedPositions", assignedPositions);
-        return "assigned-traineeships";
+        return "committee/assigned-positions";
     }
 
     @PostMapping("/committee/complete-traineeship")
     public String completeAssignedTraineeships(@RequestParam("positionId") int positionId, Model model) {
         committeeService.completeAssignedTraineeships(positionId);
-        return "redirect:/committee/assigned-traineeships";
+        return "redirect:/committee/assigned-positions";
     }
 
 }
