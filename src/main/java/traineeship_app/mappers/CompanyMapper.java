@@ -12,12 +12,12 @@ import java.util.List;
 //  built-in methods like save(), findById(), findAll(), etc
 
 @Repository
-public interface CompanyMapper extends JpaRepository<Company, String> {
+public interface CompanyMapper extends JpaRepository<Company, Long> {
     // username (String) acts as the primary key
 
     // Custom query method to find Company by username
     Company findByUsername(String username);
 
 
-    List<TraineeshipPosition> findPositionsByLocation(String location);
+    //List<TraineeshipPosition> findPositionsByLocation(String location);
 }

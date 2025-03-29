@@ -5,7 +5,7 @@ import traineeship_app.domainmodel.Professor;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.mappers.ProfessorMapper;
 import traineeship_app.mappers.TraineeshipPositionsMapper;
-
+/*
 public class AssignmentBasedOnInterests implements SupervisorAssignmentStrategy {
 
     @Autowired
@@ -52,3 +52,4 @@ public class AssignmentBasedOnInterests implements SupervisorAssignmentStrategy 
         }
     }
 }
+*/

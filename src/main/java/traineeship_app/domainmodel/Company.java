@@ -1,15 +1,14 @@
 package traineeship_app.domainmodel;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+import org.springframework.ui.Model;
+
+
 import java.util.List;
 
 @Entity
 @Table(name = "company")
-public class Company {
-
-    @Id
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
+public class Company extends User{
 
     @Column(name = "company_name", nullable = false, unique = true)
     private String companyName;
@@ -25,22 +24,13 @@ public class Company {
     public Company() {}
 
     // Company constructor
-    public Company(String username, String companyName, String companyLocation, List<TraineeshipPosition> positions) {
-        this.username = username;
+    public Company(String companyName, String companyLocation, List<TraineeshipPosition> positions) {
         this.companyName = companyName;
         this.companyLocation = companyLocation;
         this.positions = positions;
     }
 
     // Getters & Setters
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getCompanyName() {
         return companyName;
     }

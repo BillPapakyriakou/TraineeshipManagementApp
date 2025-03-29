@@ -1,12 +1,17 @@
 package traineeship_app.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import traineeship_app.domainmodel.Evaluation;
 import traineeship_app.domainmodel.Professor;
+import traineeship_app.domainmodel.Student;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.mappers.ProfessorMapper;
+import traineeship_app.mappers.StudentMapper;
 import traineeship_app.mappers.TraineeshipPositionsMapper;
+import traineeship_app.mappers.UserMapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,14 +20,67 @@ import java.util.Optional;
 @Service
 public class ProfessorServiceImpl implements ProfessorService {
 
+
+    private final ProfessorMapper professorMapper;
+    private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private ProfessorMapper professorMapper;
-    @Autowired
-    private TraineeshipPositionsMapper traineeshipPositionMapper;
+    public ProfessorServiceImpl(ProfessorMapper professorMapper, UserMapper userMapper, PasswordEncoder passwordEncoder){
+        this.professorMapper = professorMapper;
+        this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
+    }
+
 
     @Override
     public Professor retrieveProfile(String username) {
-        return professorMapper.findByUsername(username);
+        return null;
+    }
+
+    @Override
+    public void SaveProfile(Professor professor) {
+        // Ελέγχουμε αν το username υπάρχει ήδη
+        if (userMapper.existsByUsername(professor.getUsername())) {
+            throw new DataIntegrityViolationException("Username already exists");
+        }
+        Professor professorCopy = new Professor();
+        professorCopy.setUsername(professor.getUsername());
+        professorCopy.setPassword(passwordEncoder.encode(professor.getPassword()));
+        professorCopy.setRole(professor.getRole());
+        professorCopy.setProfessorName(professor.getProfessorName());
+        // Αποθήκευση στη βάση δεδομένων
+        professorMapper.save(professorCopy);
+
+    }
+
+    @Override
+    public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
+        return List.of();
+    }
+
+    @Override
+    public void evaluateAssignedPosition(int positionId) {
+
+    }
+
+    @Override
+    public void SaveEvaluation(int positionId, Evaluation evaluation) {
+
+    }
+/*
+    private final ProfessorMapper professorMapper;
+    private final TraineeshipPositionsMapper traineeshipPositionMapper;
+    @Autowired
+    public ProfessorServiceImpl(ProfessorMapper professorMapper, TraineeshipPositionsMapper traineeshipPositionMapper) {
+        this.professorMapper = professorMapper;
+        this.traineeshipPositionMapper = traineeshipPositionMapper;
+    }
+
+    @Override
+    public Professor retrieveProfile(String username) {
+       // return professorMapper.findByUsername(username);
+        return null;
     }
 
     @Override
@@ -33,10 +91,11 @@ public class ProfessorServiceImpl implements ProfessorService {
     @Override
     public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
         // Gets list of traineeship positions for the given username
-        List<TraineeshipPosition> positions = professorMapper.findByProfessorUsername(username);
+       // List<TraineeshipPosition> positions = professorMapper.findByProfessorUsername(username);
 
         // Returns ArrayList of positions
-        return new ArrayList<>(positions);
+      //  return new ArrayList<>(positions);
+        return null;
     }
 
     @Override
@@ -79,5 +138,5 @@ public class ProfessorServiceImpl implements ProfessorService {
         } else {
             throw new IllegalArgumentException("Position not found with ID: " + positionId);
         }
-    }
+    }*/
 }

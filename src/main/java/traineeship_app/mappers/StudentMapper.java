@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import traineeship_app.domainmodel.Student;
 
+
 import java.util.List;
 
 
@@ -11,13 +12,14 @@ import java.util.List;
 //  built-in methods like save(), findById(), findAll(), etc
 
 @Repository
-public interface StudentMapper extends JpaRepository<Student, String>{
+public interface StudentMapper extends JpaRepository<Student, Long>{
     // username (String) acts as the primary key
 
     // Custom query method to find user by username
     Student findByUsername(String username);
+    boolean existsStudentByAM(String am);
 
-    List<Student> findAllApplications();
+    //List<Student> findAllApplications();
 
-    String getInterests(String applicantUsername);
+    //String getInterests(String applicantUsername);
 }

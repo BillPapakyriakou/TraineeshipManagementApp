@@ -2,21 +2,59 @@ package traineeship_app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import traineeship_app.domainmodel.Student;
-import traineeship_app.domainmodel.TraineeshipPosition;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import traineeship_app.domainmodel.*;
 import traineeship_app.services.CommitteeService;
 
-import java.util.List;
-
 @Controller
+@RequestMapping("/committees")
 public class CommitteeController {
 
+
+    private final CommitteeService committeeService;
+
+
     @Autowired
-    private CommitteeService committeeService;
+    public CommitteeController(CommitteeService committeeService ){
+        this.committeeService = committeeService;
+
+    }
+
+    @PostMapping("/register")
+    public String registerStudent(
+            @ModelAttribute("committee") Committee committee,
+            BindingResult result,
+            RedirectAttributes redirectAttributes) {
+
+
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.committee", result);
+            redirectAttributes.addFlashAttribute("committee", committee);
+            return "redirect:/users/register?role=COMMITTEE_MEMBER";
+        }
+
+        try {
+            committeeService.SaveProfile(committee);
+            redirectAttributes.addFlashAttribute("success", "COMMITTEE registration successful!");
+            return "redirect:/users/login";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Registration failed: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("committee", committee);
+            return "redirect:/users/register?role=COMMITTEE_MEMBER";
+        }
+    }
+
+
+
+    /*
+    private final CommitteeService committeeService;
+
+    @Autowired
+    public CommitteeController(CommitteeService committeeService) {
+        this.committeeService = committeeService;
+    }
 
     @GetMapping("/committee/dashboard")
     public String getCommitteeDashboard() {
@@ -68,5 +106,7 @@ public class CommitteeController {
         committeeService.completeAssignedTraineeships(positionId);
         return "redirect:/committee/assigned-positions";
     }
+    *
+     */
 
 }

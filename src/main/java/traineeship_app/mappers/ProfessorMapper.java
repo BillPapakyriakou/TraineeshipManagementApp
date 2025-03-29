@@ -12,15 +12,15 @@ import java.util.List;
 //  built-in methods like save(), findById(), findAll(), etc
 
 @Repository
-public interface ProfessorMapper extends JpaRepository<Professor, String>{
+public interface ProfessorMapper extends JpaRepository<Professor, Long>{
     // username (String) acts as the primary key
 
     // Custom query method to find user by username
-    Professor findByUsername(String username);
+    //Professor findByUsername(String username);
 
-    List<TraineeshipPosition> findByProfessorUsername(String username);
+    // List<TraineeshipPosition> findProfessorByProfessorName(String professorName);
 
-    String findLeastBusyProfessor();
+    //String findLeastBusyProfessor();
 
-    String findProfessorByExpertise(String topics);
+    // String findProfessorByExpertise(String topics);
 }

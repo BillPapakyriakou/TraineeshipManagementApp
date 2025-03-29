@@ -1,12 +1,16 @@
 package traineeship_app.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import traineeship_app.domainmodel.Company;
 import traineeship_app.domainmodel.Evaluation;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.mappers.CompanyMapper;
+import traineeship_app.mappers.ProfessorMapper;
 import traineeship_app.mappers.TraineeshipPositionsMapper;
+import traineeship_app.mappers.UserMapper;
 
 
 import java.util.List;
@@ -16,10 +20,78 @@ import java.util.Optional;
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
+    private final CompanyMapper companyMapper;
+    private final UserMapper userMapper;
+    private final PasswordEncoder passwordEncoder;
+
     @Autowired
-    private CompanyMapper companyMapper;
+    public CompanyServiceImpl(CompanyMapper companyMapper, UserMapper userMapper, PasswordEncoder passwordEncoder){
+        this.companyMapper = companyMapper;
+        this.userMapper = userMapper;
+        this.passwordEncoder = passwordEncoder;
+    }
+
+
+    @Override
+    public Company retrieveProfile(String username) {
+        return null;
+    }
+
+
+
+    @Override
+    public void SaveProfile(Company company) {
+        // Ελέγχουμε αν το username υπάρχει ήδη
+        if (userMapper.existsByUsername(company.getUsername())) {
+            throw new DataIntegrityViolationException("Username already exists");
+        }
+        Company companyCopy = new Company();
+        companyCopy.setUsername(company.getUsername());
+        companyCopy.setPassword(passwordEncoder.encode(company.getPassword()));
+        companyCopy.setRole(company.getRole());
+        companyCopy.setCompanyName(company.getCompanyName());
+        companyCopy.setCompanyLocation(company.getCompanyLocation());
+
+        companyMapper.save(companyCopy);
+    }
+
+    @Override
+    public List<TraineeshipPosition> retrieveAvailablePositions(String username) {
+        return List.of();
+    }
+
+    @Override
+    public void addPosition(String username, TraineeshipPosition position) {
+
+    }
+
+    @Override
+    public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
+        return List.of();
+    }
+
+    @Override
+    public void evaluateAssignedPosition(int positionId) {
+
+    }
+
+    @Override
+    public void saveEvaluation(int positionId, Evaluation evaluation) {
+
+    }
+
+    @Override
+    public void deletePosition(int positionId) {
+
+    }
+/*
+    private final CompanyMapper companyMapper;
+    private final TraineeshipPositionsMapper traineeshipPositionMapper;
     @Autowired
-    private TraineeshipPositionsMapper traineeshipPositionMapper;
+    public CompanyServiceImpl(CompanyMapper companyMapper, TraineeshipPositionsMapper traineeshipPositionMapper) {
+        this.companyMapper = companyMapper;
+        this.traineeshipPositionMapper = traineeshipPositionMapper;
+    }
 
     @Override
     public Company retrieveProfile(String username) {
@@ -112,6 +184,6 @@ public class CompanyServiceImpl implements CompanyService {
             throw new IllegalArgumentException("Position with ID " + positionId + " not found.");
         }
     }
-
+*/
 
 }

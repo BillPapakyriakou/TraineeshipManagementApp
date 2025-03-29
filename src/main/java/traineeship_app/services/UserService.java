@@ -10,4 +10,5 @@ public interface UserService {
 
     User findById(String username);  // finds user by username
 
+    long getUserIdByUsername(String username);
 }

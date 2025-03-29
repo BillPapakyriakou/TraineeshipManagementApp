@@ -1,15 +1,17 @@
 package traineeship_app.domainmodel;
 
-import javax.persistence.*;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
 import java.util.List;
 
 @Entity
 @Table(name = "professor")
-public class Professor {
+public class Professor extends User{
 
-    @Id
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;
 
     @Column(name = "professor_name", nullable = false)
     private String professorName;
@@ -24,8 +26,8 @@ public class Professor {
     public Professor() {}
 
     // Professor constructor
-    public Professor(String username, String professorName, String interests, List<TraineeshipPosition> supervisedPositions) {
-        this.username = username;
+    public Professor(String professorName, String interests, List<TraineeshipPosition> supervisedPositions) {
+
         this.professorName = professorName;
         this.interests = interests;
         this.supervisedPositions = supervisedPositions;
@@ -34,14 +36,6 @@ public class Professor {
 
 
     // Getters & Setters
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
     public String getProfessorName() {
         return professorName;
     }

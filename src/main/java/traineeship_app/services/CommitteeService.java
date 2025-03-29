@@ -1,5 +1,6 @@
 package traineeship_app.services;
 
+import traineeship_app.domainmodel.Committee;
 import traineeship_app.domainmodel.Student;
 import traineeship_app.domainmodel.TraineeshipPosition;
 
@@ -18,4 +19,7 @@ public interface CommitteeService {
     List<TraineeshipPosition> listAssignedTraineeships();
 
     void completeAssignedTraineeships(int positionId);
+
+    void SaveProfile(Committee committee);
+
 }

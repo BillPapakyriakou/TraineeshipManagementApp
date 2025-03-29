@@ -7,7 +7,7 @@ import traineeship_app.mappers.TraineeshipPositionsMapper;
 
 import java.util.List;
 
-
+/*
 public class SearchBasedOnInterests implements PositionsSearchStrategy {
 
     @Autowired
@@ -22,4 +22,4 @@ public class SearchBasedOnInterests implements PositionsSearchStrategy {
     }
 
 
-}
+} */

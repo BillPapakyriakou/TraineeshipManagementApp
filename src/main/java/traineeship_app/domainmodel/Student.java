@@ -1,14 +1,11 @@
 package traineeship_app.domainmodel;
 
-import javax.persistence.*;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "student")
-public class Student {
-
-    @Id
-    @Column(name = "username", nullable = false, unique = true)
-    private String username;  // primary key
+public class Student extends User{
 
     @Column(name = "student_name", nullable = false)
     private String studentName;
@@ -41,9 +38,8 @@ public class Student {
 
 
     // Student constructor
-    public Student(String username, String studentName, String AM, double avgGrade, String preferredLocation,
+    public Student(String studentName, String AM, double avgGrade, String preferredLocation,
                    String interests, String skills, boolean lookingForTraineeship, TraineeshipPosition assignedTraineeship) {
-        this.username = username;
         this.studentName = studentName;
         this.AM = AM;
         this.avgGrade = avgGrade;
@@ -55,13 +51,6 @@ public class Student {
     }
 
     // Getters & Setters
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getStudentName() {
         return studentName;

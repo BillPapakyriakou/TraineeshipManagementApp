@@ -1,8 +1,10 @@
 package traineeship_app.domainmodel;
 
-import javax.persistence.*;
-import java.util.List;
+
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "traineeship_position")
@@ -41,15 +43,15 @@ public class TraineeshipPosition {
     private boolean passFailGrade;
 
     @OneToOne
-    @JoinColumn(name = "student_id", referencedColumnName = "username")
+    @JoinColumn(name = "student_id", referencedColumnName = "id")
     private Student student;  // One-to-one with student
 
     @ManyToOne
-    @JoinColumn(name = "supervisor_id", referencedColumnName = "username")
+    @JoinColumn(name = "supervisor_id", referencedColumnName = "id")
     private Professor supervisor;  // Many-to-one with professor
 
     @ManyToOne
-    @JoinColumn(name = "company_id", referencedColumnName = "username")
+    @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;  // Many-to-one with company
 
     @OneToMany(mappedBy = "traineeshipPosition")

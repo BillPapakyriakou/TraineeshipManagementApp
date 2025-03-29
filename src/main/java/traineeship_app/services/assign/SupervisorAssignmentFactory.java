@@ -1,7 +1,7 @@
 package traineeship_app.services.assign;
 
 public class SupervisorAssignmentFactory {
-
+/*
     private AssignmentBasedOnLoad assignmentBasedOnLoad;
     private AssignmentBasedOnInterests assignmentBasedOnInterests;
 
@@ -13,5 +13,5 @@ public class SupervisorAssignmentFactory {
             default -> throw new IllegalArgumentException("Unknown strategy: " + strategy);
         };
     }
-
+*/
 }

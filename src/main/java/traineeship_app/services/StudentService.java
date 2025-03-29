@@ -9,6 +9,6 @@ public interface StudentService {
 
     Student retrieveProfile(String studentUsername);
 
-    void saveLogBook(TraineeshipPosition position);
+    // void saveLogBook(TraineeshipPosition position);
 
 }

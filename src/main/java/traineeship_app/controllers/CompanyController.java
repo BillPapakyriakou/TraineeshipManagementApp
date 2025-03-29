@@ -3,22 +3,66 @@ package traineeship_app.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import traineeship_app.domainmodel.Company;
 import traineeship_app.domainmodel.Evaluation;
+import traineeship_app.domainmodel.Student;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.services.CompanyService;
 
 import java.util.List;
 
 @Controller
+@RequestMapping("/companies")
 public class CompanyController {
 
+    private final CompanyService companyService;
+
     @Autowired
-    private CompanyService companyService;
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
+
+    @PostMapping("/register")
+    public String registerCompany(
+            @ModelAttribute("company") Company company,
+            BindingResult result,
+            RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.company", result);
+            redirectAttributes.addFlashAttribute("company", company);
+            return "redirect:/users/register?role=COMPANY";
+        }
+        try {
+            companyService.SaveProfile(company);
+            redirectAttributes.addFlashAttribute("success", "Company user registration successful!");
+            return "redirect:/users/login";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Registration failed: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("company",company);
+            return "redirect:/users/register?role=COMPANY";
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+/*
+    private final CompanyService companyService;
+
+    @Autowired
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
 
     @GetMapping("/company/dashboard")
@@ -96,5 +140,5 @@ public class CompanyController {
         companyService.deletePosition(positionId);
         return "redirect:/company/available-positions";
     }
-
+*/
 }

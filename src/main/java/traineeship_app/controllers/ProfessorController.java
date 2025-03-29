@@ -3,23 +3,67 @@ package traineeship_app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import traineeship_app.domainmodel.Evaluation;
-import traineeship_app.domainmodel.Professor;
-import traineeship_app.domainmodel.TraineeshipPosition;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import traineeship_app.domainmodel.*;
 import traineeship_app.services.ProfessorService;
 
 import java.util.List;
 
 @Controller
-public class ProfessorController {
+@RequestMapping("/professors")
+public class ProfessorController{
+
+    private final ProfessorService professorService;
+    @Autowired
+    public ProfessorController(ProfessorService professorService) {
+        this.professorService = professorService;
+
+    }
+
+    @PostMapping("/register")
+    public String registerProfessor(
+            @ModelAttribute("professor") Professor professor,
+            BindingResult result,
+            RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.professor", result);
+            redirectAttributes.addFlashAttribute("professor", professor);
+            return "redirect:/users/register?role=PROFESSOR";
+        }
+
+        try {
+            professorService.SaveProfile(professor);
+            redirectAttributes.addFlashAttribute("success", "Professor registration successful!");
+            return "redirect:/users/login";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Registration failed: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("professor", professor);
+            return "redirect:/users/register?role=PROFESSOR";
+        }
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+/*
+    private final ProfessorService professorService;
 
     @Autowired
-    private ProfessorService professorService;
+    public ProfessorController(ProfessorService professorService) {
+        this.professorService = professorService;
+    }
 
 
     @GetMapping("/professor/dashboard")
@@ -95,4 +139,5 @@ public class ProfessorController {
         return "redirect:/professor/dashboard"; // Redirects to the professor's dashboard after saving the evaluation
     }
 
+     */
 }

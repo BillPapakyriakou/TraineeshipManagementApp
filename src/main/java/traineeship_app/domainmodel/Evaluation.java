@@ -1,6 +1,7 @@
 package traineeship_app.domainmodel;
 
-import javax.persistence.*;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "evaluation")
@@ -28,7 +29,7 @@ public class Evaluation {
     @JoinColumn(name = "traineeship_position_id")
     private TraineeshipPosition traineeshipPosition;
 
-   // We decided to set up EvaluationType as an enum inside the class
+    // We decided to set up EvaluationType as an enum inside the class
     public enum EvaluationType {
         EXAM,
         ASSIGNMENT,

@@ -1,5 +1,5 @@
 package traineeship_app.services.search;
-
+ /*
 public class PositionsSearchFactory {
 
     private SearchBasedOnLocation searchBasedOnLocation;
@@ -31,4 +31,4 @@ public class PositionsSearchFactory {
                 throw new IllegalArgumentException("Unknown strategy: " + strategy);
         }
     }
-}
+} */

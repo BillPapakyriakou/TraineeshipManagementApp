@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import traineeship_app.domainmodel.User;
 import traineeship_app.mappers.UserMapper;
@@ -16,14 +16,47 @@ import traineeship_app.mappers.UserMapper;
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;  // Used for password encryption
-                                                         // Automatically injects the PasswordEncoder bean
+    private final PasswordEncoder bCryptPasswordEncoder;
+    private final UserMapper userDAO;
 
     @Autowired
-    private UserMapper userDAO;
+    public UserServiceImpl(PasswordEncoder passwordEncoder, UserMapper userDAO) {
+        this.bCryptPasswordEncoder = passwordEncoder;
+        this.userDAO = userDAO;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+        User user = userDAO.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                user.getAuthorities()
+        );
+    }
+
+    @Override
+    public void saveUser(User user){
+
+    }
+
+    @Override
+    public boolean isUserPresent(User user){
+        return false;
+    }
+
+    @Override
+    public User findById(String username){
+        return null;
+    }
+
+    @Override
+    public long getUserIdByUsername(String username){
+        return userDAO.findUserIdByUsername(username);
+    }
 
 
+/*
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userDAO.findByUsername(username);  // Get user from our database
@@ -55,5 +88,5 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     @Override
     public User findById(String username) {
         return userDAO.findByUsername(username);
-    }
+    }*/
 }

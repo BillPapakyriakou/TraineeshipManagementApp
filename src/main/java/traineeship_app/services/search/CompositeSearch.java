@@ -3,7 +3,7 @@ package traineeship_app.services.search;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import java.util.ArrayList;
 import java.util.List;
-
+/*
 public class CompositeSearch implements PositionsSearchStrategy {
 
     private SearchBasedOnLocation searchBasedOnLocation;
@@ -27,4 +27,4 @@ public class CompositeSearch implements PositionsSearchStrategy {
         return combinedResults;
     }
 
-}
+} */

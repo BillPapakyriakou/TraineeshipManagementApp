@@ -1,16 +1,18 @@
 package traineeship_app.domainmodel;
 
+
+import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import java.io.Serializable;  // required for Spring Security session management
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User implements UserDetails, Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+public class User implements UserDetails, Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)  // Auto-generate ID
@@ -98,5 +100,6 @@ public class User implements UserDetails, Serializable {
     public Collection<? extends GrantedAuthority> getAuthorities() {    // User roles/permissions
         return List.of((GrantedAuthority) () -> "ROLE_" + role.name());
     }
+
 
 }

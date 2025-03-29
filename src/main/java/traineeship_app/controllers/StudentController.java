@@ -3,19 +3,55 @@ package traineeship_app.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import traineeship_app.domainmodel.Student;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.services.StudentService;
 
-@Controller  // responsible for processing HTTP requests, communicating with services and returning the correct views
+@Controller
+@RequestMapping("/students")
 public class StudentController {
 
+
+    private final StudentService studentService;
+
     @Autowired
-    private StudentService studentService;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+    @PostMapping("/register")
+    public String registerStudent(
+            @ModelAttribute("student") Student student,
+            BindingResult result,
+            RedirectAttributes redirectAttributes) {
+
+        if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.student", result);
+            redirectAttributes.addFlashAttribute("student", student);
+            return "redirect:/users/register?role=STUDENT";
+        }
+
+        try {
+            studentService.SaveProfile(student);
+            redirectAttributes.addFlashAttribute("success", "Student registration successful!");
+            return "redirect:/users/login";
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Registration failed: " + e.getMessage());
+            redirectAttributes.addFlashAttribute("student", student);
+            return "redirect:/users/register?role=STUDENT";
+        }
+    }
+
+
+    /*
+    private final StudentService studentService;
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
 
 
     @GetMapping("/student/dashboard")  // tells spring that this method should handle get-requests sent to the /student/dashboard URL
@@ -51,8 +87,8 @@ public class StudentController {
 
     @PostMapping("/logbook/save")
     public String saveLogbook(@ModelAttribute("position") TraineeshipPosition position, Model theModel) {
-        studentService.saveLogBook(position);
+        //studentService.saveLogBook(position);
         return "redirect:/student/dashboard"; // Redirects to dashboard after saving logbook
     }
-
+*/
 }

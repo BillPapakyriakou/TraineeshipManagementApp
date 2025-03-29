@@ -7,7 +7,7 @@ import traineeship_app.mappers.CompanyMapper;
 import traineeship_app.mappers.StudentMapper;
 
 import java.util.List;
-
+/*
 public class SearchBasedOnLocation implements PositionsSearchStrategy {
 
     @Autowired
@@ -37,7 +37,7 @@ public class SearchBasedOnLocation implements PositionsSearchStrategy {
         }
 
         // Retrieve traineeship positions based on the location
-        return companyMapper.findPositionsByLocation(location);
+        //return companyMapper.findPositionsByLocation(location);
     }
 
-}
+} */
