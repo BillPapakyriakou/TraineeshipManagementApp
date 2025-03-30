@@ -5,11 +5,11 @@
     <title>Assigned Positions</title>
 </head>
 <body>
-    <h1>Assigned Positions</h1>
-    <ul>
-        {% for position in positions %}
-            <li>{{ position.title }} - <a href="/company/evaluate?positionId={{ position.id }}">Evaluate</a></li>
-        {% endfor %}
-    </ul>
+<h1>Assigned Positions</h1>
+<ul>
+    {% for position in positions %}
+    <li>{{ position.title }} - <a href="/company/evaluate?positionId={{ position.id }}">Evaluate</a></li>
+    {% endfor %}
+</ul>
 </body>
 </html>

@@ -5,12 +5,12 @@
     <title>Company Profile</title>
 </head>
 <body>
-    <h1>Company Profile</h1>
-    <form action="/profile/save" method="post">
-        <input type="hidden" name="username" value="{{ company.username }}">
-        <label>Name: <input type="text" name="name" value="{{ company.name }}"></label>
-        <label>Description: <textarea name="description">{{ company.description }}</textarea></label>
-        <button type="submit">Save</button>
-    </form>
+<h1>Company Profile</h1>
+<form action="/profile/save" method="post">
+    <input type="hidden" name="username" value="{{ company.username }}">
+    <label>Name: <input type="text" name="name" value="{{ company.name }}"></label>
+    <label>Description: <textarea name="description">{{ company.description }}</textarea></label>
+    <button type="submit">Save</button>
+</form>
 </body>
 </html>
