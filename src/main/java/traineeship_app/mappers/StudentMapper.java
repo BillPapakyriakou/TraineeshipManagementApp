@@ -19,7 +19,7 @@ public interface StudentMapper extends JpaRepository<Student, Long>{
     Student findByUsername(String username);
     boolean existsStudentByAM(String am);
 
-    //List<Student> findAllApplications();
+    List<Student> findAllApplications();
 
-    //String getInterests(String applicantUsername);
+    String getInterests(String applicantUsername);
 }

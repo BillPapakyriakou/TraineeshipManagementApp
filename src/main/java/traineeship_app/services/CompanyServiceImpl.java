@@ -23,85 +23,37 @@ public class CompanyServiceImpl implements CompanyService {
     private final CompanyMapper companyMapper;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final TraineeshipPositionsMapper traineeshipPositionMapper;
+
 
     @Autowired
-    public CompanyServiceImpl(CompanyMapper companyMapper, UserMapper userMapper, PasswordEncoder passwordEncoder){
+    public CompanyServiceImpl(
+            CompanyMapper companyMapper,
+            UserMapper userMapper,
+            PasswordEncoder passwordEncoder,
+            TraineeshipPositionsMapper traineeshipPositionMapper) {
         this.companyMapper = companyMapper;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.traineeshipPositionMapper = traineeshipPositionMapper;
     }
-
-
-    @Override
-    public Company retrieveProfile(String username) {
-        return null;
-    }
-
 
 
     @Override
     public void SaveProfile(Company company) {
-        // Ελέγχουμε αν το username υπάρχει ήδη
         if (userMapper.existsByUsername(company.getUsername())) {
             throw new DataIntegrityViolationException("Username already exists");
         }
-        Company companyCopy = new Company();
-        companyCopy.setUsername(company.getUsername());
-        companyCopy.setPassword(passwordEncoder.encode(company.getPassword()));
-        companyCopy.setRole(company.getRole());
-        companyCopy.setCompanyName(company.getCompanyName());
-        companyCopy.setCompanyLocation(company.getCompanyLocation());
-
-        companyMapper.save(companyCopy);
+        company.setPassword(passwordEncoder.encode(company.getPassword()));
+        companyMapper.save(company);
     }
 
-    @Override
-    public List<TraineeshipPosition> retrieveAvailablePositions(String username) {
-        return List.of();
-    }
-
-    @Override
-    public void addPosition(String username, TraineeshipPosition position) {
-
-    }
-
-    @Override
-    public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
-        return List.of();
-    }
-
-    @Override
-    public void evaluateAssignedPosition(int positionId) {
-
-    }
-
-    @Override
-    public void saveEvaluation(int positionId, Evaluation evaluation) {
-
-    }
-
-    @Override
-    public void deletePosition(int positionId) {
-
-    }
-/*
-    private final CompanyMapper companyMapper;
-    private final TraineeshipPositionsMapper traineeshipPositionMapper;
-    @Autowired
-    public CompanyServiceImpl(CompanyMapper companyMapper, TraineeshipPositionsMapper traineeshipPositionMapper) {
-        this.companyMapper = companyMapper;
-        this.traineeshipPositionMapper = traineeshipPositionMapper;
-    }
 
     @Override
     public Company retrieveProfile(String username) {
         return companyMapper.findByUsername(username);
     }
 
-    @Override
-    public void SaveProfile(Company company) {
-        companyMapper.save(company);
-    }
 
     @Override
     public List<TraineeshipPosition> retrieveAvailablePositions(String username) {
@@ -184,6 +136,5 @@ public class CompanyServiceImpl implements CompanyService {
             throw new IllegalArgumentException("Position with ID " + positionId + " not found.");
         }
     }
-*/
 
 }

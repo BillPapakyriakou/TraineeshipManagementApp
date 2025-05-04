@@ -35,20 +35,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         );
     }
 
-    @Override
-    public void saveUser(User user){
-
-    }
-
-    @Override
-    public boolean isUserPresent(User user){
-        return false;
-    }
-
-    @Override
-    public User findById(String username){
-        return null;
-    }
 
     @Override
     public long getUserIdByUsername(String username){
@@ -56,37 +42,25 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
 
-/*
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userDAO.findByUsername(username);  // Get user from our database
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        }
-        return user;
-    }
 
     @Override
     public void saveUser(User user) {
-        // Check if user already exists
-        if (userDAO.findByUsername(user.getUsername()) != null) {
-            throw new IllegalArgumentException("User already exists with username: " + user.getUsername());
+        if (userDAO.existsByUsername(user.getUsername())) {
+            throw new IllegalArgumentException("User already exists");
         }
-
-        // Encrypt the password before saving the user
-        String encryptedPassword = bCryptPasswordEncoder.encode(user.getPassword());
-        user.setPassword(encryptedPassword);
+        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         userDAO.save(user);
     }
 
     @Override
     public boolean isUserPresent(User user) {
-        User storedUser = userDAO.findByUsername(user.getUsername());
-        return storedUser != null;
+        return userDAO.existsByUsername(user.getUsername());
     }
 
     @Override
     public User findById(String username) {
-        return userDAO.findByUsername(username);
-    }*/
+        return userDAO.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    }
+
 }

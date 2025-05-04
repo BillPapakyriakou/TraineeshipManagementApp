@@ -1,13 +1,15 @@
 package traineeship_app.services.search;
- /*
+
+import org.springframework.stereotype.Component;
+import traineeship_app.domainmodel.TraineeshipPosition;
+import java.util.List;
+
+@Component
 public class PositionsSearchFactory {
 
-    private SearchBasedOnLocation searchBasedOnLocation;
-
-    private SearchBasedOnInterests searchBasedOnInterests;
-
-    private CompositeSearch compositeSearch;
-
+    private final SearchBasedOnLocation searchBasedOnLocation;
+    private final SearchBasedOnInterests searchBasedOnInterests;
+    private final CompositeSearch compositeSearch;
 
     // Constructor to initialize the search strategies
     public PositionsSearchFactory(SearchBasedOnLocation searchBasedOnLocation,
@@ -17,7 +19,6 @@ public class PositionsSearchFactory {
         this.searchBasedOnInterests = searchBasedOnInterests;
         this.compositeSearch = compositeSearch;
     }
-
 
     public PositionsSearchStrategy create(String strategy) {
         switch (strategy.toLowerCase()) {
@@ -31,4 +32,4 @@ public class PositionsSearchFactory {
                 throw new IllegalArgumentException("Unknown strategy: " + strategy);
         }
     }
-} */
+}

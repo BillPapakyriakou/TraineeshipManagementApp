@@ -14,28 +14,31 @@ import java.util.Optional;
 @Service
 public class StudentServiceImpl implements StudentService {
 
-
     private final StudentMapper studentMapper;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final TraineeshipPositionsMapper traineeshipPositionMapper;
 
     @Autowired
-    public StudentServiceImpl(StudentMapper studentMapper, UserMapper userMapper, PasswordEncoder passwordEncoder){
+    public StudentServiceImpl(StudentMapper studentMapper,
+                              UserMapper userMapper,
+                              PasswordEncoder passwordEncoder,
+                              TraineeshipPositionsMapper traineeshipPositionMapper) {
         this.studentMapper = studentMapper;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.traineeshipPositionMapper = traineeshipPositionMapper;
     }
-
 
     @Override
     public void SaveProfile(Student student) {
-
         if (userMapper.existsByUsername(student.getUsername())) {
             throw new RuntimeException("username already exists");
         }
         if (studentMapper.existsStudentByAM(student.getAM())) {
             throw new RuntimeException("AM already exists");
         }
+
         Student studentCopy = new Student();
         studentCopy.setUsername(student.getUsername());
         studentCopy.setPassword(passwordEncoder.encode(student.getPassword()));
@@ -47,25 +50,8 @@ public class StudentServiceImpl implements StudentService {
         studentCopy.setLookingForTraineeship(student.isLookingForTraineeship());
         studentCopy.setSkills(student.getSkills());
         studentCopy.setInterests(student.getInterests());
+
         studentMapper.save(studentCopy);
-    }
-
-    @Override
-    public Student retrieveProfile(String studentUsername) {
-        return null;
-    }
-    /*
-    private final StudentMapper studentMapper;
-    //private final TraineeshipPositionsMapper traineeshipPositionMapper;
-    @Autowired
-    public StudentServiceImpl(StudentMapper studentMapper, TraineeshipPositionsMapper traineeshipPositionMapper) {
-        this.studentMapper = studentMapper;
-        //this.traineeshipPositionMapper = traineeshipPositionMapper;
-    }
-
-    @Override
-    public void SaveProfile(Student student) {
-        studentMapper.save((student));
     }
 
     @Override
@@ -75,17 +61,14 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void saveLogBook(TraineeshipPosition position) {
-
         Optional<TraineeshipPosition> existingPositionOpt = traineeshipPositionMapper.findById(position.getId());
 
         if (existingPositionOpt.isPresent()) {
-            TraineeshipPosition existingPosition = existingPositionOpt.get();  // Retrieve position from DB
-
-            existingPosition.setStudentLogbook(position.getStudentLogbook());  // Update logbook content
-
-            traineeshipPositionMapper.save(existingPosition);  // Save updated position back to DB
+            TraineeshipPosition existingPosition = existingPositionOpt.get();
+            existingPosition.setStudentLogbook(position.getStudentLogbook());
+            traineeshipPositionMapper.save(existingPosition);
         } else {
             throw new IllegalArgumentException("Position not found with ID: " + position.getId());
         }
-    }*/
+    }
 }

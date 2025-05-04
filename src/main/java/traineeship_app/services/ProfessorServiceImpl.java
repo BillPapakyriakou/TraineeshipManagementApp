@@ -24,19 +24,19 @@ public class ProfessorServiceImpl implements ProfessorService {
     private final ProfessorMapper professorMapper;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final TraineeshipPositionsMapper traineeshipPositionMapper;
 
     @Autowired
-    public ProfessorServiceImpl(ProfessorMapper professorMapper, UserMapper userMapper, PasswordEncoder passwordEncoder){
+    public ProfessorServiceImpl(ProfessorMapper professorMapper,
+                                UserMapper userMapper,
+                                PasswordEncoder passwordEncoder,
+                                TraineeshipPositionsMapper traineeshipPositionMapper) {
         this.professorMapper = professorMapper;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
+        this.traineeshipPositionMapper = traineeshipPositionMapper;
     }
 
-
-    @Override
-    public Professor retrieveProfile(String username) {
-        return null;
-    }
 
     @Override
     public void SaveProfile(Professor professor) {
@@ -55,48 +55,16 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
-        return List.of();
-    }
-
-    @Override
-    public void evaluateAssignedPosition(int positionId) {
-
-    }
-
-    @Override
-    public void SaveEvaluation(int positionId, Evaluation evaluation) {
-
-    }
-/*
-    private final ProfessorMapper professorMapper;
-    private final TraineeshipPositionsMapper traineeshipPositionMapper;
-    @Autowired
-    public ProfessorServiceImpl(ProfessorMapper professorMapper, TraineeshipPositionsMapper traineeshipPositionMapper) {
-        this.professorMapper = professorMapper;
-        this.traineeshipPositionMapper = traineeshipPositionMapper;
-    }
-
-    @Override
     public Professor retrieveProfile(String username) {
        // return professorMapper.findByUsername(username);
         return null;
     }
 
     @Override
-    public void SaveProfile(Professor professor) {
-        professorMapper.save(professor);
-    }
-
-    @Override
     public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
-        // Gets list of traineeship positions for the given username
-       // List<TraineeshipPosition> positions = professorMapper.findByProfessorUsername(username);
-
-        // Returns ArrayList of positions
-      //  return new ArrayList<>(positions);
-        return null;
+        return traineeshipPositionMapper.findBySupervisor_Username(username);
     }
+
 
     @Override
     public void evaluateAssignedPosition(int positionId) {
@@ -138,5 +106,5 @@ public class ProfessorServiceImpl implements ProfessorService {
         } else {
             throw new IllegalArgumentException("Position not found with ID: " + positionId);
         }
-    }*/
+    }
 }

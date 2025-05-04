@@ -1,30 +1,27 @@
 package traineeship_app.services.search;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import traineeship_app.domainmodel.TraineeshipPosition;
-import java.util.ArrayList;
 import java.util.List;
-/*
+
+@Component
 public class CompositeSearch implements PositionsSearchStrategy {
 
+    @Autowired
     private SearchBasedOnLocation searchBasedOnLocation;
-    private SearchBasedOnInterests searchBasedOnInterests;
 
+    @Autowired
+    private SearchBasedOnInterests searchBasedOnInterests;
 
     @Override
     public List<TraineeshipPosition> search(String applicantUsername) {
-        // Get the positions based on location
-        List<TraineeshipPosition> locationResults = searchBasedOnLocation.search(applicantUsername);
+        // Combine results from both searches (location + interests)
+        List<TraineeshipPosition> locationBasedResults = searchBasedOnLocation.search(applicantUsername);
+        List<TraineeshipPosition> interestBasedResults = searchBasedOnInterests.search(applicantUsername);
 
-        // Get the positions based on interests
-        List<TraineeshipPosition> interestResults = searchBasedOnInterests.search(applicantUsername);
-
-        // Combine the results
-        List<TraineeshipPosition> combinedResults = new ArrayList<>();
-        combinedResults.addAll(locationResults);
-        combinedResults.addAll(interestResults);
-
-        // Return the combined list of positions
-        return combinedResults;
+        // Combine the results (you could apply additional logic here if needed)
+        locationBasedResults.addAll(interestBasedResults);
+        return locationBasedResults; // Or apply some filtering/merging logic
     }
-
-} */
+}

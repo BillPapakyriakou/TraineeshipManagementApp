@@ -17,11 +17,6 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    @Autowired
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
-
     @PostMapping("/register")
     public String registerStudent(
             @ModelAttribute("student") Student student,
@@ -46,8 +41,6 @@ public class StudentController {
     }
 
 
-    /*
-    private final StudentService studentService;
     @Autowired
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
@@ -58,6 +51,7 @@ public class StudentController {
     public String getStudentDashboard() {
         return "student/dashboard"; // Redirects to the student dashboard view
     }
+
 
     @GetMapping("/profile")
     public String retrieveProfile(@RequestParam("username") String studentUsername, Model model) {
@@ -90,5 +84,4 @@ public class StudentController {
         //studentService.saveLogBook(position);
         return "redirect:/student/dashboard"; // Redirects to dashboard after saving logbook
     }
-*/
 }

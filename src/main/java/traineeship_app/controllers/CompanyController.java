@@ -20,10 +20,6 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
-    @Autowired
-    public CompanyController(CompanyService companyService) {
-        this.companyService = companyService;
-    }
 
     @PostMapping("/register")
     public String registerCompany(
@@ -47,17 +43,6 @@ public class CompanyController {
         }
 
     }
-
-
-
-
-
-
-
-
-
-/*
-    private final CompanyService companyService;
 
     @Autowired
     public CompanyController(CompanyService companyService) {
@@ -140,5 +125,5 @@ public class CompanyController {
         companyService.deletePosition(positionId);
         return "redirect:/company/available-positions";
     }
-*/
+
 }

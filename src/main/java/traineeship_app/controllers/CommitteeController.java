@@ -7,8 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import traineeship_app.domainmodel.*;
 import traineeship_app.services.CommitteeService;
+import org.springframework.ui.Model;
+import java.util.List;
 
-@Controller
+
+
+@RestController
 @RequestMapping("/committees")
 public class CommitteeController {
 
@@ -17,9 +21,8 @@ public class CommitteeController {
 
 
     @Autowired
-    public CommitteeController(CommitteeService committeeService ){
+    public CommitteeController(CommitteeService committeeService) {
         this.committeeService = committeeService;
-
     }
 
     @PostMapping("/register")
@@ -46,15 +49,6 @@ public class CommitteeController {
         }
     }
 
-
-
-    /*
-    private final CommitteeService committeeService;
-
-    @Autowired
-    public CommitteeController(CommitteeService committeeService) {
-        this.committeeService = committeeService;
-    }
 
     @GetMapping("/committee/dashboard")
     public String getCommitteeDashboard() {
@@ -106,7 +100,5 @@ public class CommitteeController {
         committeeService.completeAssignedTraineeships(positionId);
         return "redirect:/committee/assigned-positions";
     }
-    *
-     */
 
 }
