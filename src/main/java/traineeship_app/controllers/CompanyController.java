@@ -1,6 +1,7 @@
 package traineeship_app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,19 @@ public class CompanyController {
 
     private final CompanyService companyService;
 
+    @Autowired
+    public CompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
+
+
+    @GetMapping("/home")
+    public String companyHome(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        model.addAttribute("username", username);
+        model.addAttribute("role", "ROLE_COMPANY");
+        return "company/home";  // This maps to templates/company/home.html
+    }
 
     @PostMapping("/register")
     public String registerCompany(
@@ -32,6 +46,8 @@ public class CompanyController {
             redirectAttributes.addFlashAttribute("company", company);
             return "redirect:/users/register?role=COMPANY";
         }
+
+
         try {
             companyService.SaveProfile(company);
             redirectAttributes.addFlashAttribute("success", "Company user registration successful!");
@@ -43,6 +59,17 @@ public class CompanyController {
         }
 
     }
+
+
+
+
+
+
+
+
+
+/*
+    private final CompanyService companyService;
 
     @Autowired
     public CompanyController(CompanyService companyService) {
@@ -125,5 +152,5 @@ public class CompanyController {
         companyService.deletePosition(positionId);
         return "redirect:/company/available-positions";
     }
-
+*/
 }

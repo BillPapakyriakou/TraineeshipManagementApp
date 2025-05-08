@@ -42,7 +42,7 @@ public class UserController {
         } else if ("COMPANY".equals(role)) {
             model.addAttribute("company", new Company());
         }else if("COMMITTEE_MEMBER".equals(role)){
-            model.addAttribute("committee", new Committee());
+            model.addAttribute("committee_member", new Committee());
         }
         return "users/register";
     }
@@ -58,10 +58,40 @@ public class UserController {
                 .findFirst()
                 .orElseThrow(()->new IllegalStateException("User has no roles"))
                 .getAuthority();
-
         model.addAttribute("username", username);
         model.addAttribute("role", role);
-        return "users/home";
+
+        switch (role) {
+            case "ROLE_STUDENT":
+                return "redirect:/students/home";
+            case "ROLE_PROFESSOR":
+                return "redirect:/professors/home";
+            case "ROLE_COMPANY":
+                return "redirect:/companies/home";
+            case "ROLE_COMMITTEE_MEMBER":
+                return "redirect:/committees/home";
+            default:
+                throw new IllegalStateException("Unknown role: " + role);
+        }
+
+
+        //return "redirect:/students/home";
+    }
+
+
+    @GetMapping("/logbook")
+    public String showLogbookPage() {
+        return "student/logbook";  // maps to templates/student/logbook.html
+    }
+
+    @GetMapping("/dashboard")
+    public String showDashboardPage() {
+        return "students/dashboard";  // maps to templates/student/dashboard.html
+    }
+
+    @GetMapping("/profile")
+    public String showProfilePage() {
+        return "students/profile";  // maps to templates/student/profile.html
     }
 
 

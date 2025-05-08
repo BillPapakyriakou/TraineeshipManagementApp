@@ -1,18 +1,16 @@
 package traineeship_app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import traineeship_app.domainmodel.*;
 import traineeship_app.services.CommitteeService;
-import org.springframework.ui.Model;
-import java.util.List;
 
-
-
-@RestController
+@Controller
 @RequestMapping("/committees")
 public class CommitteeController {
 
@@ -21,20 +19,29 @@ public class CommitteeController {
 
 
     @Autowired
-    public CommitteeController(CommitteeService committeeService) {
+    public CommitteeController(CommitteeService committeeService ){
         this.committeeService = committeeService;
+
+    }
+
+    @GetMapping("/home")
+    public String commiteeHome(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        model.addAttribute("username", username);
+        model.addAttribute("role", "ROLE_COMMITTEE");
+        return "committee/home";  // This maps to templates/committee/home.html
     }
 
     @PostMapping("/register")
-    public String registerStudent(
-            @ModelAttribute("committee") Committee committee,
+    public String registerCommittee(
+            @ModelAttribute("committee_member") Committee committee,
             BindingResult result,
             RedirectAttributes redirectAttributes) {
 
 
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.committee", result);
-            redirectAttributes.addFlashAttribute("committee", committee);
+            redirectAttributes.addFlashAttribute("committee_member", committee);
             return "redirect:/users/register?role=COMMITTEE_MEMBER";
         }
 
@@ -44,11 +51,20 @@ public class CommitteeController {
             return "redirect:/users/login";
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Registration failed: " + e.getMessage());
-            redirectAttributes.addFlashAttribute("committee", committee);
+            redirectAttributes.addFlashAttribute("committee_member", committee);
             return "redirect:/users/register?role=COMMITTEE_MEMBER";
         }
     }
 
+
+
+    /*
+    private final CommitteeService committeeService;
+
+    @Autowired
+    public CommitteeController(CommitteeService committeeService) {
+        this.committeeService = committeeService;
+    }
 
     @GetMapping("/committee/dashboard")
     public String getCommitteeDashboard() {
@@ -100,5 +116,7 @@ public class CommitteeController {
         committeeService.completeAssignedTraineeships(positionId);
         return "redirect:/committee/assigned-positions";
     }
+    *
+     */
 
 }

@@ -17,5 +17,8 @@ public interface UserMapper extends JpaRepository<User, Long> {
     // Custom query method to find user by username
     Optional<User> findByUsername(String username);
     boolean existsByUsername(String username);
-    long findUserIdByUsername(String username);
+
+    //User findUserIdByUsername(String username);
+
+    //User findByUsername(String username);
 }

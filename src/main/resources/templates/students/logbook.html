@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fill Logbook</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <style>
+        /* Basic body transition and dark mode styles */
+        body {
+            transition: none;
+        }
+
+        .dark-mode {
+            background-color: #2f2f2f;
+            color: #f0f0f0;
+        }
+
+        .dark-mode .btn-primary {
+            background-color: #4a90e2;
+            border-color: #4a90e2;
+        }
+
+        .dark-mode .btn-success {
+            background-color: #388e3c;
+            border-color: #388e3c;
+        }
+
+        .dark-mode .btn-danger {
+            background-color: #d32f2f;
+            border-color: #d32f2f;
+        }
+
+        .dark-mode .btn-secondary {
+            background-color: #757575;
+            border-color: #757575;
+        }
+
+        .dark-mode .form-control {
+            background-color: #444;
+            color: #f0f0f0;
+            border-color: #666;
+        }
+
+        .dark-mode .form-control:focus {
+            background-color: #555;
+            color: #f0f0f0;
+            border-color: #4a90e2;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+        }
+
+        .dark-mode .form-group label {
+            color: #f0f0f0;
+        }
+
+        .return-home-btn {
+            position: fixed;
+            bottom: 30px;  /* Distance from the bottom of the page */
+            left: 50%;
+            transform: translateX(-50%);  /* Center the button horizontally */
+            width: 200px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="${darkMode ? 'dark-mode' : ''}">
+<div class="container mt-5">
+    <h2 class="text-center">Fill Logbook</h2>
+
+    <form th:action="@{/students/logbook/save}" th:object="${position}" method="post">
+
+        <div class="form-group">
+            <label for="positionTitle">Position Title</label>
+            <input type="text" class="form-control" id="positionTitle" th:field="*{title}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <textarea class="form-control" id="description" th:field="*{description}" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="fromDate">Start Date</label>
+            <input type="date" class="form-control" id="fromDate" th:field="*{fromDate}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="toDate">End Date</label>
+            <input type="date" class="form-control" id="toDate" th:field="*{toDate}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="skills">Skills</label>
+            <input type="text" class="form-control" id="skills" th:field="*{skills}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="topics">Topics</label>
+            <input type="text" class="form-control" id="topics" th:field="*{topics}" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save Logbook Entry</button>
+    </form>
+
+    <a href="http://localhost:9090/users/home" class="btn btn-secondary mt-3">Return to Home</a>
+</div>
+
+<script src="/js/dark-mode.js"></script>
+
+</body>
+</html>

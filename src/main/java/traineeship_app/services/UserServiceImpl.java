@@ -2,6 +2,7 @@ package traineeship_app.services;
 
 
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import traineeship_app.domainmodel.User;
 import traineeship_app.mappers.UserMapper;
+
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService, UserDetailsService {
@@ -35,32 +38,54 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         );
     }
 
-
-    @Override
-    public long getUserIdByUsername(String username){
-        return userDAO.findUserIdByUsername(username);
-    }
-
-
-
+    @Transactional
     @Override
     public void saveUser(User user) {
-        if (userDAO.existsByUsername(user.getUsername())) {
-            throw new IllegalArgumentException("User already exists");
+        // Check if user already exists
+        if (userDAO.findByUsername(user.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("User already exists with username: " + user.getUsername());
         }
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+
+
+        // Encrypt the password before saving the user
+        String encryptedPassword = bCryptPasswordEncoder.encode(user.getPassword());
+        user.setPassword(encryptedPassword);
         userDAO.save(user);
     }
 
     @Override
     public boolean isUserPresent(User user) {
-        return userDAO.existsByUsername(user.getUsername());
+        Optional<User> storedUser = userDAO.findByUsername(user.getUsername());
+        return storedUser != null;
+    }
+
+    @Transactional
+    @Override
+    public Optional<User> findById(String username) {
+        return userDAO.findByUsername(username);
+    }
+
+
+/*
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userDAO.findByUsername(username);  // Get user from our database
+        if (user == null) {
+            throw new UsernameNotFoundException("User not found with username: " + username);
+        }
+        return user;
+    }
+
+
+
+    @Override
+    public boolean isUserPresent(User user) {
+        User storedUser = userDAO.findByUsername(user.getUsername());
+        return storedUser != null;
     }
 
     @Override
     public User findById(String username) {
-        return userDAO.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
-    }
-
+        return userDAO.findByUsername(username);
+    }*/
 }

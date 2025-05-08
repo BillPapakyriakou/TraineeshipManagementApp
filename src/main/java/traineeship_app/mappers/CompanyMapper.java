@@ -19,7 +19,5 @@ public interface CompanyMapper extends JpaRepository<Company, Long> {
     Company findByUsername(String username);
 
 
-    default List<TraineeshipPosition> findPositionsByCompanyLocation(String location) {
-        return null;
-    }
+    List<TraineeshipPosition> findPositionsByCompanyLocation(String companyLocation);
 }

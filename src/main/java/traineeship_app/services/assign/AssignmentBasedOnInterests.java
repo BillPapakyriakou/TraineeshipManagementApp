@@ -1,13 +1,11 @@
 package traineeship_app.services.assign;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import traineeship_app.domainmodel.Professor;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.mappers.ProfessorMapper;
 import traineeship_app.mappers.TraineeshipPositionsMapper;
-
-@Component
+/*
 public class AssignmentBasedOnInterests implements SupervisorAssignmentStrategy {
 
     @Autowired
@@ -54,3 +52,4 @@ public class AssignmentBasedOnInterests implements SupervisorAssignmentStrategy 
         }
     }
 }
+*/

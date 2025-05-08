@@ -11,9 +11,8 @@ import traineeship_app.services.assign.SupervisorAssignmentFactory;
 import traineeship_app.services.assign.SupervisorAssignmentStrategy;
 import traineeship_app.domainmodel.Student;
 import traineeship_app.domainmodel.TraineeshipPosition;
-import traineeship_app.services.search.PositionsSearchStrategy;
-import traineeship_app.services.search.PositionsSearchFactory;
-
+//import traineeship_app.services.search.PositionsSearchFactory;
+//import traineeship_app.services.search.PositionsSearchStrategy;
 
 import java.util.List;
 import java.util.Optional;
@@ -24,31 +23,17 @@ public class CommitteeServiceImpl implements CommitteeService {
     private final CommitteeMapper committeeMapper;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-    private final StudentMapper studentMapper;
-    private final TraineeshipPositionsMapper positionsMapper;
-    private final PositionsSearchFactory positionsSearchFactory;
-    private final SupervisorAssignmentFactory supervisorAssignmentFactory;
 
-    // Only one constructor to inject all dependencies
     @Autowired
-    public CommitteeServiceImpl(CommitteeMapper committeeMapper,
-                                UserMapper userMapper,
-                                PasswordEncoder passwordEncoder,
-                                StudentMapper studentMapper,
-                                TraineeshipPositionsMapper positionsMapper,
-                                PositionsSearchFactory positionsSearchFactory,
-                                SupervisorAssignmentFactory supervisorAssignmentFactory) {
+    public CommitteeServiceImpl(CommitteeMapper committeeMapper, UserMapper userMapper, PasswordEncoder passwordEncoder){
         this.committeeMapper = committeeMapper;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
-        this.studentMapper = studentMapper;
-        this.positionsMapper = positionsMapper;
-        this.positionsSearchFactory = positionsSearchFactory;
-        this.supervisorAssignmentFactory = supervisorAssignmentFactory;
     }
 
+
     @Override
-    public void SaveProfile(Committee committee) {
+    public void SaveProfile(Committee committee){
         if (userMapper.existsByUsername(committee.getUsername())) {
             throw new DataIntegrityViolationException("Username already exists");
         }
@@ -59,7 +44,55 @@ public class CommitteeServiceImpl implements CommitteeService {
         committeeCopy.setCommitteeMemberName(committee.getCommitteeMemberName());
 
         committeeMapper.save(committeeCopy);
+
     }
+
+
+    @Override
+    public List<TraineeshipPosition> retrievePositionsForApplicant(String applicantUsername, String strategy) {
+        return List.of();
+    }
+
+    @Override
+    public List<Student> retrieveTraineeshipApplications() {
+        return List.of();
+    }
+
+    @Override
+    public void assignPosition(int positionId, String studentUsername) {
+
+    }
+
+    @Override
+    public void assignSupervisor(int positionId, String strategy) {
+
+    }
+
+    @Override
+    public List<TraineeshipPosition> listAssignedTraineeships() {
+        return List.of();
+    }
+
+    @Override
+    public void completeAssignedTraineeships(int positionId) {
+
+    }
+
+/*
+    @Autowired
+    PositionsSearchFactory positionsSearchFactory;
+
+    @Autowired
+    SupervisorAssignmentFactory supervisorAssignmentFactory;
+
+    private final StudentMapper studentMapper;
+    private final TraineeshipPositionsMapper positionsMapper;
+    @Autowired
+    public CommitteeServiceImpl(StudentMapper studentMapper, TraineeshipPositionsMapper positionsMapper) {
+        this.studentMapper = studentMapper;
+        this.positionsMapper = positionsMapper;
+    }
+
 
     @Override
     public List<TraineeshipPosition> retrievePositionsForApplicant(String applicantUsername, String strategy) {
@@ -67,6 +100,12 @@ public class CommitteeServiceImpl implements CommitteeService {
         PositionsSearchStrategy searchStrategy = positionsSearchFactory.create(strategy);
         // Use the strategy to search for positions
         return searchStrategy.search(applicantUsername);
+    }
+
+
+    @Override
+    public List<TraineeshipPosition> retrievePositionsForApplicant(String applicantUsername, String strategy) {
+        return List.of();
     }
 
     @Override
@@ -104,8 +143,8 @@ public class CommitteeServiceImpl implements CommitteeService {
         }
 
         // Use the factory to create a strategy and assign a supervisor
-        SupervisorAssignmentStrategy assignmentStrategy = supervisorAssignmentFactory.create(strategy);
-        assignmentStrategy.assign(positionId);
+        //SupervisorAssignmentStrategy assignmentStrategy = supervisorAssignmentFactory.create(strategy);
+        //assignmentStrategy.assign(positionId);
     }
 
     @Override
@@ -128,5 +167,6 @@ public class CommitteeServiceImpl implements CommitteeService {
         // Mark the position as completed (assumption: setting passFailGrade to true means completion)
         position.setPassFailGrade(true);
         positionsMapper.update(position);
-    }
+    }*/
 }
+

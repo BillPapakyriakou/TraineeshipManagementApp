@@ -14,19 +14,20 @@ import java.util.List;
 public interface TraineeshipPositionsMapper extends JpaRepository<TraineeshipPosition, Integer> {
     // id (int) acts as the primary key
 
-    List<TraineeshipPosition> findBySupervisor_Username(String username);
-
     // Custom query method to find TraineeshipPosition by username
-    TraineeshipPosition findByUsername(String username);
+    TraineeshipPosition findByStudentUsername(String username);
 
-    void update(TraineeshipPosition position);
+    //void update(TraineeshipPosition position);
 
     List<TraineeshipPosition> findByCompanyUsername(String username);
 
+    List<TraineeshipPosition> findBySupervisorUsername(String username);
 
-    List<TraineeshipPosition> findByInterests(String interests);
+    List<TraineeshipPosition> findByStudentInterests(String interests);
 
-    List<TraineeshipPosition> findAssignedPositions();
+    List<TraineeshipPosition> findByIsAssignedTrue();
 
-    String getTopics(Integer positionId);
+    String findTopicsById(Integer id);
+
+    //String getTopics(Integer positionId);
 }

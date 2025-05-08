@@ -6,10 +6,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import traineeship_app.domainmodel.Evaluation;
 import traineeship_app.domainmodel.Professor;
-import traineeship_app.domainmodel.Student;
 import traineeship_app.domainmodel.TraineeshipPosition;
 import traineeship_app.mappers.ProfessorMapper;
-import traineeship_app.mappers.StudentMapper;
 import traineeship_app.mappers.TraineeshipPositionsMapper;
 import traineeship_app.mappers.UserMapper;
 
@@ -24,19 +22,23 @@ public class ProfessorServiceImpl implements ProfessorService {
     private final ProfessorMapper professorMapper;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
-    private final TraineeshipPositionsMapper traineeshipPositionMapper;
+
+    public final TraineeshipPositionsMapper traineeshipPositionsMapper;
 
     @Autowired
-    public ProfessorServiceImpl(ProfessorMapper professorMapper,
-                                UserMapper userMapper,
-                                PasswordEncoder passwordEncoder,
-                                TraineeshipPositionsMapper traineeshipPositionMapper) {
+    public ProfessorServiceImpl(ProfessorMapper professorMapper, UserMapper userMapper, PasswordEncoder passwordEncoder, TraineeshipPositionsMapper traineeshipPositionsMapper){
         this.professorMapper = professorMapper;
         this.userMapper = userMapper;
         this.passwordEncoder = passwordEncoder;
-        this.traineeshipPositionMapper = traineeshipPositionMapper;
+        this.traineeshipPositionsMapper = traineeshipPositionsMapper;
     }
 
+
+    @Override
+    public Professor retrieveProfile(String username) {
+        // return professorMapper.findByUsername(username);
+        return null;
+    }
 
     @Override
     public void SaveProfile(Professor professor) {
@@ -55,21 +57,19 @@ public class ProfessorServiceImpl implements ProfessorService {
     }
 
     @Override
-    public Professor retrieveProfile(String username) {
-       // return professorMapper.findByUsername(username);
-        return null;
-    }
-
-    @Override
     public List<TraineeshipPosition> retrieveAssignedPositions(String username) {
-        return traineeshipPositionMapper.findBySupervisor_Username(username);
-    }
+        // Gets list of traineeship positions for the given username
+         List<TraineeshipPosition> positions = traineeshipPositionsMapper.findBySupervisorUsername(username);
 
+        // Returns ArrayList of positions
+        return new ArrayList<>(positions);
+
+    }
 
     @Override
     public void evaluateAssignedPosition(int positionId) {
         // Find the position by its ID (findById returns Optional)
-        Optional<TraineeshipPosition> positionOpt = traineeshipPositionMapper.findById(positionId);
+        Optional<TraineeshipPosition> positionOpt = traineeshipPositionsMapper.findById(positionId);
 
         if (positionOpt.isPresent()) {
             TraineeshipPosition position = positionOpt.get();  // Extract the position
@@ -80,7 +80,7 @@ public class ProfessorServiceImpl implements ProfessorService {
                 Evaluation evaluation = new Evaluation(1, Evaluation.EvaluationType.PROJECT, 7, 8, 9); // Just an example
                 position.getEvaluations().add(evaluation);  // Add the new evaluation to the position
 
-                traineeshipPositionMapper.save(position);  // Save the updated position
+                traineeshipPositionsMapper.save(position);  // Save the updated position
             } else {
                 throw new IllegalStateException("Position already evaluated");
             }
@@ -94,7 +94,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     @Override
     public void SaveEvaluation(int positionId, Evaluation evaluation) {
         // Find the position by its ID (findById returns Optional)
-        Optional<TraineeshipPosition> position = traineeshipPositionMapper.findById(positionId);
+        Optional<TraineeshipPosition> position = traineeshipPositionsMapper.findById(positionId);
 
         // Check if position exists
         if (position.isPresent()) {
@@ -102,9 +102,10 @@ public class ProfessorServiceImpl implements ProfessorService {
             position.get().getEvaluations().add(evaluation);
 
             // Save  position with the updated evaluations list
-            traineeshipPositionMapper.save(position.get());
+            traineeshipPositionsMapper.save(position.get());
         } else {
             throw new IllegalArgumentException("Position not found with ID: " + positionId);
         }
     }
+
 }

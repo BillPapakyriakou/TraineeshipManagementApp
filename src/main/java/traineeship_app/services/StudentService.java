@@ -7,6 +7,8 @@ public interface StudentService {
 
     void SaveProfile(Student student);
 
+    void UpdateProfile(Student student);
+
     Student retrieveProfile(String studentUsername);
 
     void saveLogBook(TraineeshipPosition position);

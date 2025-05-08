@@ -1,22 +1,10 @@
 package traineeship_app.services.assign;
 
-import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Service;
-
-@Component
 public class SupervisorAssignmentFactory {
+/*
+    private AssignmentBasedOnLoad assignmentBasedOnLoad;
+    private AssignmentBasedOnInterests assignmentBasedOnInterests;
 
-    private final AssignmentBasedOnLoad assignmentBasedOnLoad;
-    private final AssignmentBasedOnInterests assignmentBasedOnInterests;
-
-    @Autowired
-    public SupervisorAssignmentFactory(AssignmentBasedOnLoad assignmentBasedOnLoad,
-                                       AssignmentBasedOnInterests assignmentBasedOnInterests) {
-        this.assignmentBasedOnLoad = assignmentBasedOnLoad;
-        this.assignmentBasedOnInterests = assignmentBasedOnInterests;
-    }
 
     public SupervisorAssignmentStrategy create(String strategy) {
         return switch (strategy.toLowerCase()) {
@@ -25,4 +13,5 @@ public class SupervisorAssignmentFactory {
             default -> throw new IllegalArgumentException("Unknown strategy: " + strategy);
         };
     }
+*/
 }

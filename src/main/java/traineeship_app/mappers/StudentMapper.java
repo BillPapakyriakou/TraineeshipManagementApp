@@ -17,9 +17,18 @@ public interface StudentMapper extends JpaRepository<Student, Long>{
 
     // Custom query method to find user by username
     Student findByUsername(String username);
+
+    Student findByAM(String AM);
+
     boolean existsStudentByAM(String am);
 
-    List<Student> findAllApplications();
+    boolean existsStudentByUsername(String username);
 
-    String getInterests(String applicantUsername);
+    List<Student> findByLookingForTraineeship(boolean lookingForTraineeship);
+
+    String findInterestsByUsername(String username);
+
+    //List<Student> findAllApplications();
+
+    //String getInterests(String applicantUsername);
 }

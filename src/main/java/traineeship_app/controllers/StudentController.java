@@ -2,6 +2,7 @@ package traineeship_app.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,20 @@ public class StudentController {
 
 
     private final StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
+    }
+
+
+    @GetMapping("/home")
+    public String studentHome(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        model.addAttribute("username", username);
+        model.addAttribute("role", "ROLE_STUDENT");
+        return "students/home";  // This maps to templates/students/home.html
+    }
 
     @PostMapping("/register")
     public String registerStudent(
@@ -41,17 +56,12 @@ public class StudentController {
     }
 
 
-    @Autowired
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
+    @GetMapping("/dashboard")  // tells spring that this method should handle get-requests sent to the /student/dashboard URL
+    public String getStudentDashboard(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        model.addAttribute("username", username);
+        return "students/dashboard"; // Redirects to the student dashboard view
     }
-
-
-    @GetMapping("/student/dashboard")  // tells spring that this method should handle get-requests sent to the /student/dashboard URL
-    public String getStudentDashboard() {
-        return "student/dashboard"; // Redirects to the student dashboard view
-    }
-
 
     @GetMapping("/profile")
     public String retrieveProfile(@RequestParam("username") String studentUsername, Model model) {
@@ -63,25 +73,33 @@ public class StudentController {
         // Add student to the model
         model.addAttribute("student", student);
 
-        return "student/profile"; // Returns the profile view
+        return "students/profile"; // Returns the profile view
     }
-
+    /*
     @PostMapping("/profile/save")  // tells spring that this method should handle post-requests sent to the correct URL
     public String saveProfile(@ModelAttribute("student") Student student, Model theModel) {
         studentService.SaveProfile(student);
         theModel.addAttribute("student", student);
-        return "redirect:/profile?username=" + student.getUsername();  // redirects back to the user's profile
+        return "redirect:/students/profile?username=" + student.getUsername();  // redirects back to the user's profile
+    }
+    */
+    @PostMapping("/profile/save")  // tells spring that this method should handle post-requests sent to the correct URL
+    public String updateProfile(@ModelAttribute("student") Student student, Model theModel) {
+        studentService.UpdateProfile(student);
+        theModel.addAttribute("student", student);
+        return "redirect:/students/profile?username=" + student.getUsername();  // redirects back to the user's profile
     }
 
     @GetMapping("/logbook")
     public String fillLogbook(Model model) {
         model.addAttribute("position", new TraineeshipPosition()); // Adds an empty position object
-        return "student/logbook"; // Returns the logbook form view
+        return "/students/logbook"; // Returns the logbook form view
     }
 
     @PostMapping("/logbook/save")
     public String saveLogbook(@ModelAttribute("position") TraineeshipPosition position, Model theModel) {
-        //studentService.saveLogBook(position);
-        return "redirect:/student/dashboard"; // Redirects to dashboard after saving logbook
+        studentService.saveLogBook(position);
+        return "redirect:/dashboard"; // Redirects to dashboard after saving logbook
     }
+
 }

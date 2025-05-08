@@ -2,14 +2,14 @@ package traineeship_app.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import traineeship_app.domainmodel.*;
 import traineeship_app.services.ProfessorService;
-import org.springframework.ui.Model;
-
 
 import java.util.List;
 
@@ -18,6 +18,19 @@ import java.util.List;
 public class ProfessorController{
 
     private final ProfessorService professorService;
+    @Autowired
+    public ProfessorController(ProfessorService professorService) {
+        this.professorService = professorService;
+
+    }
+
+    @GetMapping("/home")
+    public String professorHome(Model model, Authentication authentication) {
+        String username = authentication.getName();
+        model.addAttribute("username", username);
+        model.addAttribute("role", "ROLE_PROFESSOR");
+        return "professor/home";  // This maps to templates/professor/home.html
+    }
 
     @PostMapping("/register")
     public String registerProfessor(
@@ -45,6 +58,17 @@ public class ProfessorController{
 
     }
 
+
+
+
+
+
+
+
+
+
+/*
+    private final ProfessorService professorService;
 
     @Autowired
     public ProfessorController(ProfessorService professorService) {
@@ -125,4 +149,5 @@ public class ProfessorController{
         return "redirect:/professor/dashboard"; // Redirects to the professor's dashboard after saving the evaluation
     }
 
+     */
 }
